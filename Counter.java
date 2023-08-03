@@ -1,6 +1,10 @@
+
 public class Counter {
   public int _ctr;
   public int _multiplier;
+  public String word = "pp";
+  public String secondWord;
+  private int twenty = 20;
   
   //method increments _ctr
   public void increment() {
