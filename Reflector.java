@@ -12,14 +12,27 @@
  * @version Date: [CURRENT DATE] 
  */
 import java.lang.reflect.*;
+import java.util.ArrayList;
+
+  
 
  public class Reflector {
+  private Object instance;
 
-  public void findMethods(String className) {
-    try {
+  public void createInstance(String className) {
+      try {
       Class c = Class.forName(className);
 
-      Object instance = c.getConstructor().newInstance();
+      instance = c.getConstructor().newInstance();
+    } catch (Throwable e) {
+      e.printStackTrace();
+    }
+  }
+
+  public ArrayList<String> findMethods(String className) {
+    ArrayList<String> methodNames = new ArrayList<String>();
+    try {
+      Class c = Class.forName(className);
 
       Field[] fields = c.getDeclaredFields();
       for (Field field : fields) {
@@ -33,10 +46,38 @@ import java.lang.reflect.*;
       for (int i = 0; i < m.length; i++) {
         if (m[i].toString().contains("()")) {
           System.out.println(m[i].getName());
+          methodNames.add(m[i].getName());
+
         }
       }
     } catch (Throwable e) {
+      
       System.err.println(e);
     }
+    return methodNames;
   }
+
+  public void runMethod(String methodName) {
+    try {
+      Method method = instance.getClass().getMethod(methodName);
+      method.invoke(instance);
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    } catch (SecurityException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      
+      e.printStackTrace();
+    } catch (IllegalArgumentException e) {
+
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      
+      e.printStackTrace();
+    }
+
+    
+  }
+
+
  }
