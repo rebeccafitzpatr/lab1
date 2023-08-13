@@ -15,7 +15,7 @@ public class Main {
     Scanner scanner = new Scanner(System.in);  // Create a Scanner object
 
     
-      System.out.println("Enter username");
+      System.out.println("Enter class");
 
       String className = scanner.nextLine();  // Read user input
 
